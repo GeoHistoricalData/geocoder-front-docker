@@ -1,0 +1,24 @@
+
+version: '2.0'
+
+services:
+    web:
+        image: geocoder-nginx
+        build: images/nginx
+        ports:
+            - "8080:80"
+        links:
+            - php
+        volumes:
+          - data:/var/www/geocoder/
+    php:
+        image: geocoder-php
+        build: images/php
+        env_file:
+          - pg_vars.env
+        volumes:
+          - data:/var/www/geocoder/
+
+volumes:
+    data:
+        driver: local
